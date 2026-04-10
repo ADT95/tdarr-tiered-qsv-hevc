@@ -1,4 +1,4 @@
-# Tiered Intel QSV HEVC
+# Tdarr Tiered Intel QSV HEVC Flow
 
 A resolution-aware HEVC transcoding flow for [Tdarr](https://github.com/HaveAGitGat/Tdarr), built around Intel Quick Sync Video (QSV) hardware encoding. Designed for mixed media libraries where source quality, codec, and resolution vary widely.
 
