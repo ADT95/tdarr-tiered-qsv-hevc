@@ -1,0 +1,940 @@
+{
+  "_id": "90Qkh5CCi",
+  "name": "Tiered Intel QSV HEVC",
+  "description": "Tiered Intel QSV HEVC v1.0.0",
+  "tags": "",
+  "flowPlugins": [
+    {
+      "name": "Input File",
+      "sourceRepo": "Community",
+      "pluginName": "inputFile",
+      "version": "1.0.0",
+      "inputsDB": {
+        "fileAccessChecks": "true"
+      },
+      "fpEnabled": true,
+      "id": "input_file",
+      "position": {
+        "x": 1056,
+        "y": -744
+      }
+    },
+    {
+      "name": "Skip Hardlinked Files",
+      "sourceRepo": "Local",
+      "pluginName": "skipHardlinked",
+      "version": "1.0.0",
+      "fpEnabled": true,
+      "id": "skip_hardlinks",
+      "position": {
+        "x": 1056,
+        "y": -684
+      }
+    },
+    {
+      "name": "Skip Dolby Vision Files",
+      "sourceRepo": "Local",
+      "pluginName": "skipDolbyVision",
+      "version": "1.0.0",
+      "fpEnabled": true,
+      "id": "skip_dolby",
+      "position": {
+        "x": 1056,
+        "y": -624
+      }
+    },
+    {
+      "name": "Check HDR Video",
+      "sourceRepo": "Community",
+      "pluginName": "checkHdr",
+      "version": "1.0.0",
+      "fpEnabled": true,
+      "id": "check_hdr",
+      "position": {
+        "x": 1056,
+        "y": -564
+      }
+    },
+    {
+      "name": "Check File Size (Min 50MB)",
+      "sourceRepo": "Community",
+      "pluginName": "checkFileSize",
+      "version": "1.0.0",
+      "inputsDB": {
+        "lowerBound": "50",
+        "upperBound": "",
+        "unit": "MB",
+        "greaterThan": "50",
+        "lessThan": "50000"
+      },
+      "fpEnabled": true,
+      "id": "check_file_size_min",
+      "position": {
+        "x": 1056,
+        "y": -516
+      }
+    },
+    {
+      "name": "Check File Extension - MP4",
+      "sourceRepo": "Community",
+      "pluginName": "checkFileExtension",
+      "version": "1.0.0",
+      "inputsDB": {
+        "extensions": "mp4"
+      },
+      "fpEnabled": true,
+      "id": "check_mp4",
+      "position": {
+        "x": 1056,
+        "y": -456
+      }
+    },
+    {
+      "name": "Remux MP4 to MKV",
+      "sourceRepo": "Community",
+      "pluginName": "runClassicTranscodePlugin",
+      "version": "2.0.0",
+      "inputsDB": {
+        "pluginSourceId": "Community:Tdarr_Plugin_MC93_Migz1Remux",
+        "force_conform": "true"
+      },
+      "fpEnabled": true,
+      "id": "remux_mp4",
+      "position": {
+        "x": 792,
+        "y": -456
+      }
+    },
+    {
+      "name": "Check Video Codec (Skip HEVC)",
+      "sourceRepo": "Community",
+      "pluginName": "checkVideoCodec",
+      "version": "1.0.0",
+      "inputsDB": {
+        "codec": "hevc"
+      },
+      "fpEnabled": true,
+      "id": "check_hevc",
+      "position": {
+        "x": 1056,
+        "y": -426
+      }
+    },
+    {
+      "name": "Check Video Codec (Skip VP9)",
+      "sourceRepo": "Community",
+      "pluginName": "checkVideoCodec",
+      "version": "1.0.0",
+      "inputsDB": {
+        "codec": "vp9"
+      },
+      "fpEnabled": true,
+      "id": "check_vp9",
+      "position": {
+        "x": 1056,
+        "y": -396
+      }
+    },
+    {
+      "name": "Check Video Codec (Skip AV1)",
+      "sourceRepo": "Community",
+      "pluginName": "checkVideoCodec",
+      "version": "1.0.0",
+      "inputsDB": {
+        "codec": "av1"
+      },
+      "fpEnabled": true,
+      "id": "check_av1",
+      "position": {
+        "x": 1056,
+        "y": -324
+      }
+    },
+    {
+      "name": "Check Video Bitrate (Skip Low Quality)",
+      "sourceRepo": "Community",
+      "pluginName": "checkVideoBitrate",
+      "version": "1.0.0",
+      "inputsDB": {
+        "lowerBound": "1000",
+        "upperBound": "",
+        "greaterThan": "1000",
+        "lessThan": "100000"
+      },
+      "fpEnabled": true,
+      "id": "check_video_bitrate",
+      "position": {
+        "x": 1056,
+        "y": -252
+      }
+    },
+    {
+      "name": "Run mkvpropedit on Cache Copy",
+      "sourceRepo": "Local",
+      "pluginName": "runMkvpropeditOnCache",
+      "version": "1.0.0",
+      "inputsDB": {
+        "mkvpropeditPath": "mkvpropedit"
+      },
+      "fpEnabled": true,
+      "id": "run_mkvpropedit",
+      "position": {
+        "x": 1320,
+        "y": -252
+      }
+    },
+    {
+      "name": "Set Skip Encode (mkvpropedit failed)",
+      "sourceRepo": "Community",
+      "pluginName": "setFlowVariable",
+      "version": "1.0.0",
+      "inputsDB": {
+        "variable": "skipEncode",
+        "value": "TRUE"
+      },
+      "fpEnabled": true,
+      "id": "set_skip_encode_mkvpropedit_fail",
+      "position": {
+        "x": 1500,
+        "y": -180
+      }
+    },
+    {
+      "name": "Reset Flow Error (after recoverable errors)",
+      "sourceRepo": "Community",
+      "pluginName": "resetFlowError",
+      "version": "1.0.0",
+      "fpEnabled": true,
+      "id": "reset_flow_error",
+      "position": {
+        "x": 792,
+        "y": -216
+      }
+    },
+    {
+      "name": "Remove Image/Attachment Streams",
+      "sourceRepo": "Community",
+      "pluginName": "runClassicTranscodePlugin",
+      "version": "2.0.0",
+      "inputsDB": {
+        "pluginSourceId": "Community:Tdarr_Plugin_MC93_MigzImageRemoval"
+      },
+      "fpEnabled": true,
+      "id": "remove_attachments",
+      "position": {
+        "x": 1056,
+        "y": -180
+      }
+    },
+    {
+      "name": "Reorder Streams (Pre-Encode)",
+      "sourceRepo": "Community",
+      "pluginName": "runClassicTranscodePlugin",
+      "version": "2.0.0",
+      "inputsDB": {
+        "pluginSourceId": "Community:Tdarr_Plugin_lmg1_Reorder_Streams"
+      },
+      "fpEnabled": true,
+      "id": "reorder_streams_pre",
+      "position": {
+        "x": 1056,
+        "y": -120
+      }
+    },
+    {
+      "name": "Strip Unsupported Subtitle Codecs",
+      "sourceRepo": "Local",
+      "pluginName": "stripUnsupportedSubs",
+      "version": "1.0.0",
+      "inputsDB": {
+        "unsupported_codecs": "webvtt,unknown,none"
+      },
+      "fpEnabled": true,
+      "id": "pDqZZ76_M",
+      "position": {
+        "x": 1056,
+        "y": -60
+      }
+    },
+    {
+      "name": "Clean Subtitles (Keep English)",
+      "sourceRepo": "Community",
+      "pluginName": "runClassicTranscodePlugin",
+      "version": "2.0.0",
+      "inputsDB": {
+        "pluginSourceId": "Community:Tdarr_Plugin_MC93_Migz4CleanSubs",
+        "language": "eng,und",
+        "commentary": "true",
+        "tag_language": "eng"
+      },
+      "fpEnabled": true,
+      "id": "clean_subtitles",
+      "position": {
+        "x": 1056,
+        "y": 0
+      }
+    },
+    {
+      "name": "Clean Audio Streams",
+      "sourceRepo": "Community",
+      "pluginName": "runClassicTranscodePlugin",
+      "version": "2.0.0",
+      "inputsDB": {
+        "pluginSourceId": "Community:Tdarr_Plugin_MC93_Migz3CleanAudio",
+        "tag_title": "false",
+        "commentary": "true",
+        "language": "eng,und,jpn,spa"
+      },
+      "fpEnabled": true,
+      "id": "clean_audio",
+      "position": {
+        "x": 1056,
+        "y": 60
+      }
+    },
+    {
+      "name": "Compress Audio to EAC3",
+      "sourceRepo": "Community",
+      "pluginName": "runClassicTranscodePlugin",
+      "version": "2.0.0",
+      "inputsDB": {
+        "pluginSourceId": "Community:Tdarr_Plugin_MC93_Migz5ConvertAudio",
+        "codec": "eac3"
+      },
+      "fpEnabled": true,
+      "id": "compress_audio",
+      "position": {
+        "x": 1056,
+        "y": 108
+      }
+    },
+    {
+      "name": "Check Skip Encode Flag (Loopback Branch)",
+      "sourceRepo": "Community",
+      "pluginName": "checkFlowVariable",
+      "version": "1.0.0",
+      "inputsDB": {
+        "variable": "{{{args.variables.user.skipEncode}}}",
+        "value": "TRUE"
+      },
+      "fpEnabled": true,
+      "id": "check_skip_encode",
+      "position": {
+        "x": 1056,
+        "y": 156
+      }
+    },
+    {
+      "name": "Check Resolution",
+      "sourceRepo": "Community",
+      "pluginName": "checkVideoResolution",
+      "version": "1.0.0",
+      "fpEnabled": true,
+      "id": "check_resolution",
+      "position": {
+        "x": 1056,
+        "y": 204
+      }
+    },
+    {
+      "name": "QSV HEVC SD (480p/576p)",
+      "sourceRepo": "Community",
+      "pluginName": "runClassicTranscodePlugin",
+      "version": "2.0.0",
+      "inputsDB": {
+        "pluginSourceId": "Local:Tdarr_Plugin_bsh1_Boosh_FFMPEG_QSV_HEVC",
+        "container": "mkv",
+        "encoder": "hevc_qsv",
+        "force_conform": "false",
+        "enable_10bit": "true",
+        "target_bitrate_modifier": "0.5",
+        "encoder_speedpreset": "slow",
+        "extra_qsv_options": "-look_ahead 1 -look_ahead_depth 40 -extbrc 1 -b_strategy 1 -bf 3 -g 256 -async_depth 4",
+        "bitrate_cutoff": "0",
+        "max_average_bitrate": "3000",
+        "min_average_bitrate": "400",
+        "reconvert_hevc": "false",
+        "hevc_max_bitrate": "0",
+        "hwdecode_failsafe": "true"
+      },
+      "fpEnabled": true,
+      "id": "qsv_sd_encode",
+      "position": {
+        "x": 471,
+        "y": 280
+      }
+    },
+    {
+      "name": "QSV HEVC HD (720p)",
+      "sourceRepo": "Community",
+      "pluginName": "runClassicTranscodePlugin",
+      "version": "2.0.0",
+      "inputsDB": {
+        "pluginSourceId": "Local:Tdarr_Plugin_bsh1_Boosh_FFMPEG_QSV_HEVC",
+        "container": "mkv",
+        "encoder": "hevc_qsv",
+        "force_conform": "false",
+        "enable_10bit": "true",
+        "target_bitrate_modifier": "0.5",
+        "encoder_speedpreset": "slow",
+        "extra_qsv_options": "-look_ahead 1 -look_ahead_depth 40 -extbrc 1 -b_strategy 1 -bf 3 -g 256 -async_depth 4",
+        "bitrate_cutoff": "0",
+        "max_average_bitrate": "4000",
+        "min_average_bitrate": "800",
+        "reconvert_hevc": "false",
+        "hevc_max_bitrate": "0",
+        "hwdecode_failsafe": "true"
+      },
+      "fpEnabled": true,
+      "id": "qsv_hd_encode",
+      "position": {
+        "x": 671,
+        "y": 280
+      }
+    },
+    {
+      "name": "QSV HEVC Full HD (1080p)",
+      "sourceRepo": "Community",
+      "pluginName": "runClassicTranscodePlugin",
+      "version": "2.0.0",
+      "inputsDB": {
+        "pluginSourceId": "Local:Tdarr_Plugin_bsh1_Boosh_FFMPEG_QSV_HEVC",
+        "container": "mkv",
+        "encoder": "hevc_qsv",
+        "force_conform": "false",
+        "enable_10bit": "true",
+        "target_bitrate_modifier": "0.55",
+        "encoder_speedpreset": "slow",
+        "extra_qsv_options": "-look_ahead 1 -look_ahead_depth 40 -extbrc 1 -b_strategy 1 -bf 3 -g 256 -async_depth 4",
+        "bitrate_cutoff": "0",
+        "max_average_bitrate": "5500",
+        "min_average_bitrate": "1000",
+        "reconvert_hevc": "false",
+        "hevc_max_bitrate": "0",
+        "hwdecode_failsafe": "true"
+      },
+      "fpEnabled": true,
+      "id": "qsv_fullhd_encode",
+      "position": {
+        "x": 871,
+        "y": 280
+      }
+    },
+    {
+      "name": "QSV HEVC 4K (2160p)",
+      "sourceRepo": "Community",
+      "pluginName": "runClassicTranscodePlugin",
+      "version": "2.0.0",
+      "inputsDB": {
+        "pluginSourceId": "Local:Tdarr_Plugin_bsh1_Boosh_FFMPEG_QSV_HEVC",
+        "container": "mkv",
+        "encoder": "hevc_qsv",
+        "force_conform": "false",
+        "enable_10bit": "true",
+        "target_bitrate_modifier": "0.55",
+        "encoder_speedpreset": "slow",
+        "extra_qsv_options": "-look_ahead 1 -look_ahead_depth 40 -extbrc 1 -b_strategy 1 -bf 3 -g 256 -async_depth 4",
+        "bitrate_cutoff": "0",
+        "max_average_bitrate": "12000",
+        "min_average_bitrate": "2000",
+        "reconvert_hevc": "false",
+        "hevc_max_bitrate": "0",
+        "hwdecode_failsafe": "true"
+      },
+      "fpEnabled": true,
+      "id": "qsv_4k_encode",
+      "position": {
+        "x": 1071,
+        "y": 280
+      }
+    },
+    {
+      "name": "Compare File Size Ratio (Loopback Trigger)",
+      "sourceRepo": "Community",
+      "pluginName": "compareFileSizeRatio",
+      "version": "1.0.0",
+      "inputsDB": {
+        "greaterThan": "10",
+        "lessThan": "100"
+      },
+      "fpEnabled": true,
+      "id": "compare_file_size",
+      "position": {
+        "x": 1061,
+        "y": 400
+      }
+    },
+    {
+      "name": "Set Skip Encode Flag (Loop Trigger)",
+      "sourceRepo": "Community",
+      "pluginName": "setFlowVariable",
+      "version": "1.0.0",
+      "inputsDB": {
+        "variable": "skipEncode",
+        "value": "TRUE"
+      },
+      "fpEnabled": true,
+      "id": "set_skip_encode_true",
+      "position": {
+        "x": 600,
+        "y": 460
+      }
+    },
+    {
+      "name": "Delete Bloated Cache File",
+      "sourceRepo": "Community",
+      "pluginName": "deleteFile",
+      "version": "1.0.0",
+      "inputsDB": {
+        "deleteParentFolderIfEmpty": "false"
+      },
+      "fpEnabled": true,
+      "id": "delete_bad_cache",
+      "position": {
+        "x": 600,
+        "y": 520
+      }
+    },
+    {
+      "name": "Set Working File to Original (Loopback)",
+      "sourceRepo": "Community",
+      "pluginName": "setWorkingFile",
+      "version": "1.0.0",
+      "inputsDB": {
+        "source": "originalFile"
+      },
+      "fpEnabled": true,
+      "id": "restore_original",
+      "position": {
+        "x": 600,
+        "y": 580
+      }
+    },
+    {
+      "name": "Reorder Streams (Final)",
+      "sourceRepo": "Community",
+      "pluginName": "runClassicTranscodePlugin",
+      "version": "2.0.0",
+      "inputsDB": {
+        "pluginSourceId": "Community:Tdarr_Plugin_lmg1_Reorder_Streams"
+      },
+      "fpEnabled": true,
+      "id": "reorder_streams",
+      "position": {
+        "x": 1061,
+        "y": 460
+      }
+    },
+    {
+      "name": "Hard Size Gate (Final Safety Net)",
+      "sourceRepo": "Community",
+      "pluginName": "compareFileSizeRatio",
+      "version": "1.0.0",
+      "inputsDB": {
+        "greaterThan": "0",
+        "lessThan": "102"
+      },
+      "fpEnabled": true,
+      "id": "hard_size_gate",
+      "position": {
+        "x": 1061,
+        "y": 500
+      }
+    },
+    {
+      "name": "Set Working File to Original (Bloat Fallback)",
+      "sourceRepo": "Community",
+      "pluginName": "setWorkingFile",
+      "version": "1.0.0",
+      "inputsDB": {
+        "source": "originalFile"
+      },
+      "fpEnabled": true,
+      "id": "reset_to_original",
+      "position": {
+        "x": 1300,
+        "y": 560
+      }
+    },
+    {
+      "name": "Replace Original File",
+      "sourceRepo": "Community",
+      "pluginName": "replaceOriginalFile",
+      "version": "1.0.0",
+      "fpEnabled": true,
+      "id": "replace_original",
+      "position": {
+        "x": 1061,
+        "y": 560
+      }
+    }
+  ],
+  "flowEdges": [
+    {
+      "source": "input_file",
+      "sourceHandle": "1",
+      "target": "skip_hardlinks",
+      "id": "e_input_hardlinks"
+    },
+    {
+      "source": "skip_hardlinks",
+      "sourceHandle": "1",
+      "target": "skip_dolby",
+      "id": "e_hardlinks_dolby"
+    },
+    {
+      "source": "skip_dolby",
+      "sourceHandle": "1",
+      "target": "check_hdr",
+      "id": "e_dolby_hdr"
+    },
+    {
+      "source": "check_hdr",
+      "sourceHandle": "2",
+      "target": "check_file_size_min",
+      "id": "e_hdr_filesize"
+    },
+    {
+      "source": "check_file_size_min",
+      "sourceHandle": "1",
+      "target": "check_mp4",
+      "id": "e_filesize_mp4"
+    },
+    {
+      "source": "check_mp4",
+      "sourceHandle": "1",
+      "target": "remux_mp4",
+      "id": "e_mp4_remux"
+    },
+    {
+      "source": "check_mp4",
+      "sourceHandle": "2",
+      "target": "check_hevc",
+      "id": "e_mp4_skip"
+    },
+    {
+      "source": "remux_mp4",
+      "sourceHandle": "1",
+      "target": "check_hevc",
+      "id": "e_remux_hevc_1"
+    },
+    {
+      "source": "remux_mp4",
+      "sourceHandle": "2",
+      "target": "check_hevc",
+      "id": "e_remux_hevc_2"
+    },
+    {
+      "source": "check_hevc",
+      "sourceHandle": "1",
+      "target": "remove_attachments",
+      "id": "e_hevc_match_skip"
+    },
+    {
+      "source": "check_hevc",
+      "sourceHandle": "2",
+      "target": "check_vp9",
+      "id": "e_hevc_nomatch"
+    },
+    {
+      "source": "check_vp9",
+      "sourceHandle": "1",
+      "target": "remove_attachments",
+      "id": "e_vp9_match_skip"
+    },
+    {
+      "source": "check_vp9",
+      "sourceHandle": "2",
+      "target": "check_av1",
+      "id": "e_vp9_av1"
+    },
+    {
+      "source": "check_av1",
+      "sourceHandle": "1",
+      "target": "remove_attachments",
+      "id": "e_av1_match_skip"
+    },
+    {
+      "source": "check_av1",
+      "sourceHandle": "2",
+      "target": "check_video_bitrate",
+      "id": "e_av1_bitrate"
+    },
+    {
+      "source": "check_video_bitrate",
+      "sourceHandle": "1",
+      "target": "remove_attachments",
+      "id": "e_bitrate_attachments"
+    },
+    {
+      "source": "check_video_bitrate",
+      "sourceHandle": "err1",
+      "target": "run_mkvpropedit",
+      "id": "e_bitrate_err_mkvpropedit"
+    },
+    {
+      "source": "run_mkvpropedit",
+      "sourceHandle": "1",
+      "target": "reset_flow_error",
+      "id": "e_mkvpropedit_ok_reset"
+    },
+    {
+      "source": "run_mkvpropedit",
+      "sourceHandle": "2",
+      "target": "set_skip_encode_mkvpropedit_fail",
+      "id": "e_mkvpropedit_fail_setvar"
+    },
+    {
+      "source": "set_skip_encode_mkvpropedit_fail",
+      "sourceHandle": "1",
+      "target": "reset_flow_error",
+      "id": "e_setvar_reset"
+    },
+    {
+      "source": "reset_flow_error",
+      "sourceHandle": "1",
+      "target": "remove_attachments",
+      "id": "e_reset_attachments"
+    },
+    {
+      "source": "remove_attachments",
+      "sourceHandle": "1",
+      "target": "reorder_streams_pre",
+      "id": "e_attach_reorderpre_1"
+    },
+    {
+      "source": "remove_attachments",
+      "sourceHandle": "2",
+      "target": "reorder_streams_pre",
+      "id": "e_attach_reorderpre_2"
+    },
+    {
+      "source": "reorder_streams_pre",
+      "sourceHandle": "1",
+      "target": "pDqZZ76_M",
+      "id": "e_reorderpre_strip_1"
+    },
+    {
+      "source": "reorder_streams_pre",
+      "sourceHandle": "2",
+      "target": "pDqZZ76_M",
+      "id": "e_reorderpre_strip_2"
+    },
+    {
+      "source": "pDqZZ76_M",
+      "sourceHandle": "1",
+      "target": "clean_subtitles",
+      "id": "e_strip_subs_1"
+    },
+    {
+      "source": "pDqZZ76_M",
+      "sourceHandle": "2",
+      "target": "clean_subtitles",
+      "id": "e_strip_subs_2"
+    },
+    {
+      "source": "clean_subtitles",
+      "sourceHandle": "1",
+      "target": "clean_audio",
+      "id": "e_subs_audio_1"
+    },
+    {
+      "source": "clean_subtitles",
+      "sourceHandle": "2",
+      "target": "clean_audio",
+      "id": "e_subs_audio_2"
+    },
+    {
+      "source": "clean_audio",
+      "sourceHandle": "1",
+      "target": "compress_audio",
+      "id": "e_audio_compress_1"
+    },
+    {
+      "source": "clean_audio",
+      "sourceHandle": "2",
+      "target": "compress_audio",
+      "id": "e_audio_compress_2"
+    },
+    {
+      "source": "compress_audio",
+      "sourceHandle": "1",
+      "target": "check_skip_encode",
+      "id": "e_compress_skipcheck_1"
+    },
+    {
+      "source": "compress_audio",
+      "sourceHandle": "2",
+      "target": "check_skip_encode",
+      "id": "e_compress_skipcheck_2"
+    },
+    {
+      "source": "check_skip_encode",
+      "sourceHandle": "1",
+      "target": "reorder_streams",
+      "id": "e_skipcheck_skip_reorder"
+    },
+    {
+      "source": "check_skip_encode",
+      "sourceHandle": "2",
+      "target": "check_resolution",
+      "id": "e_skipcheck_proceed_resolution"
+    },
+    {
+      "source": "check_resolution",
+      "sourceHandle": "1",
+      "target": "qsv_sd_encode",
+      "id": "e_res_sd_1"
+    },
+    {
+      "source": "check_resolution",
+      "sourceHandle": "2",
+      "target": "qsv_sd_encode",
+      "id": "e_res_sd_2"
+    },
+    {
+      "source": "check_resolution",
+      "sourceHandle": "3",
+      "target": "qsv_hd_encode",
+      "id": "e_res_hd"
+    },
+    {
+      "source": "check_resolution",
+      "sourceHandle": "4",
+      "target": "qsv_fullhd_encode",
+      "id": "e_res_fullhd"
+    },
+    {
+      "source": "check_resolution",
+      "sourceHandle": "5",
+      "target": "qsv_4k_encode",
+      "id": "e_res_4k_1"
+    },
+    {
+      "source": "check_resolution",
+      "sourceHandle": "6",
+      "target": "qsv_4k_encode",
+      "id": "e_res_4k_2"
+    },
+    {
+      "source": "check_resolution",
+      "sourceHandle": "7",
+      "target": "qsv_4k_encode",
+      "id": "e_res_4k_3"
+    },
+    {
+      "source": "check_resolution",
+      "sourceHandle": "8",
+      "target": "qsv_4k_encode",
+      "id": "e_res_8k_1"
+    },
+    {
+      "source": "check_resolution",
+      "sourceHandle": "9",
+      "target": "qsv_4k_encode",
+      "id": "e_res_8k_2"
+    },
+    {
+      "source": "qsv_sd_encode",
+      "sourceHandle": "1",
+      "target": "compare_file_size",
+      "id": "e_sd_compare"
+    },
+    {
+      "source": "qsv_hd_encode",
+      "sourceHandle": "1",
+      "target": "compare_file_size",
+      "id": "e_hd_compare"
+    },
+    {
+      "source": "qsv_fullhd_encode",
+      "sourceHandle": "1",
+      "target": "compare_file_size",
+      "id": "e_fullhd_compare"
+    },
+    {
+      "source": "qsv_4k_encode",
+      "sourceHandle": "1",
+      "target": "compare_file_size",
+      "id": "e_4k_compare"
+    },
+    {
+      "source": "qsv_sd_encode",
+      "sourceHandle": "2",
+      "target": "reorder_streams",
+      "id": "e_sd_skip_reorder"
+    },
+    {
+      "source": "qsv_hd_encode",
+      "sourceHandle": "2",
+      "target": "reorder_streams",
+      "id": "e_hd_skip_reorder"
+    },
+    {
+      "source": "qsv_fullhd_encode",
+      "sourceHandle": "2",
+      "target": "reorder_streams",
+      "id": "e_fullhd_skip_reorder"
+    },
+    {
+      "source": "qsv_4k_encode",
+      "sourceHandle": "2",
+      "target": "reorder_streams",
+      "id": "e_4k_skip_reorder"
+    },
+    {
+      "source": "compare_file_size",
+      "sourceHandle": "1",
+      "target": "reorder_streams",
+      "id": "e_compare_ok_reorder"
+    },
+    {
+      "source": "compare_file_size",
+      "sourceHandle": "2",
+      "target": "set_skip_encode_true",
+      "id": "e_compare_bad_setvar"
+    },
+    {
+      "source": "set_skip_encode_true",
+      "sourceHandle": "1",
+      "target": "delete_bad_cache",
+      "id": "e_setvar_delete"
+    },
+    {
+      "source": "delete_bad_cache",
+      "sourceHandle": "1",
+      "target": "restore_original",
+      "id": "e_delete_restore"
+    },
+    {
+      "source": "restore_original",
+      "sourceHandle": "1",
+      "target": "remove_attachments",
+      "id": "e_restore_loopback"
+    },
+    {
+      "source": "reorder_streams",
+      "sourceHandle": "1",
+      "target": "hard_size_gate",
+      "id": "e_reorder_gate_1"
+    },
+    {
+      "source": "reorder_streams",
+      "sourceHandle": "2",
+      "target": "hard_size_gate",
+      "id": "e_reorder_gate_2"
+    },
+    {
+      "source": "hard_size_gate",
+      "sourceHandle": "1",
+      "target": "replace_original",
+      "id": "e_gate_replace"
+    },
+    {
+      "source": "hard_size_gate",
+      "sourceHandle": "2",
+      "target": "reset_to_original",
+      "id": "e_gate_fallback"
+    }
+  ]
+}
