@@ -4,7 +4,7 @@ A resolution-aware HEVC transcoding flow for [Tdarr](https://github.com/HaveAGit
 
 ## What it does
 
-- **Shrinks libraries without visible quality loss.** Re-encodes h264/MPEG-class video to 10-bit HEVC using per-resolution bitrate targets (3 Mbps SD, 4 Mbps 720p, 5.5 Mbps 1080p, 12 Mbps 4K), tuned with Intel EncTools (extbrc + look-ahead) for best quality-per-bit.
+- **Shrinks libraries without visible quality loss.** Re-encodes h264/MPEG-class video to 10-bit HEVC using per-resolution bitrate targets (3 Mbps SD, 4 Mbps 720p, 5.5 Mbps 1080p, 12 Mbps 4K), with 10-bit HEVC output and tunable per-resolution bitrate targets.
 - **Never touches sources that shouldn't be touched.** Skips Dolby Vision (re-encoding breaks DV metadata), HDR10, hardlinked files still seeding in torrent clients, files already in HEVC/VP9/AV1, and low-bitrate sources where re-encoding would degrade quality.
 - **Cleans up containers and metadata.** Remuxes MP4 to MKV, strips unwanted subtitle languages and codecs (keeping English), removes unwanted audio tracks (keeping English/Japanese/Spanish), removes image/attachment streams, and reorders streams so video comes first.
 - **Fails safely.** A loopback retries cleanup-only if an encode produces a suspiciously small output. A hard upper size gate reverts to original if the result is somehow larger. An mkvpropedit recovery path handles files with missing per-stream bitrate metadata. The original library file is never lost.
